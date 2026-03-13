@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holded - Software de gestión empresarial</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --dark:#0e0d0b;
+    --border-dark:#22201c;
+    --border-light:#e8e4df;
+    --bg-light:#faf8f5;
+    --bg-light2:#f5f1ec;
+    --bg-white:#fffefb;
+    --text-dark:#1a1a1a;
+    --text-mid:#555;
+    --text-muted-light:#888;
+    --red:#EF4444;
+    --red2:#f87171;
+    --blue:#1A63EE;
+  }
+  body{background:var(--bg-light);color:var(--text-dark);font-family:'Inter',system-ui,-apple-system,sans-serif;overflow-x:hidden;font-size:90%}
+  h1,h2,.section-title,.cta-title,.card-title,.feat2-title,.supp-title{font-weight:600!important}
+  strong{font-weight:600}
+  .feature-title{font-size:18px;font-weight:500!important;margin-bottom:8px;color:var(--text-dark)}
+  .card-title{font-size:18px;font-weight:500!important;margin-bottom:6px;color:var(--text-dark)}
+  .feat2-title{font-size:18px;font-weight:500!important;margin-bottom:8px;color:var(--text-dark)}
+  .supp-title{font-size:18px;font-weight:500!important;margin-bottom:10px;color:var(--text-dark)}
+  .t-author{font-size:12px;font-weight:600;color:#888}
+  .footer-col h4{font-size:13px;font-weight:600;color:var(--text-mid);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+  .feature-icon-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+
+  nav{height:60px;background:#0e0d0b;backdrop-filter:blur(12px);border-bottom:1px solid var(--border-dark);display:flex;align-items:center;justify-content:space-between;padding:0 60px;position:sticky;top:0;z-index:100}
+  .nav-logo{display:flex;align-items:center;gap:6px}
+  .nav-links{display:flex;gap:28px;font-size:14px}
+  .nav-links a{text-decoration:none;color:#888;transition:.2s;display:inline-flex;align-items:center;gap:3px}
+  .nav-links a:hover{color:#ccc}
+  .nav-links a svg{opacity:0.5;transition:.2s}
+  .nav-links a:hover svg{opacity:0.9}
+  .nav-btns{display:flex;gap:10px;align-items:center}
+  .btn-ghost{background:transparent;border:1px solid #2a2a2a;color:#888;padding:8px 16px;border-radius:8px;font-size:13px;cursor:pointer;transition:.2s}
+  .btn-ghost:hover{border-color:#555;color:#ccc}
+  .btn-nav-primary{background:#fff;color:#111;padding:8px 20px;border-radius:8px;font-size:13px;border:1px solid #e0e0e0;cursor:pointer;font-weight:500;transition:.2s}
+  .btn-nav-primary:hover{background:#f0f0f0}
+
+  .hero{min-height:calc(100vh - 60px);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:80px 60px 60px;background:var(--dark)}
+  .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% -5%,rgba(200,40,20,0.2) 0%,rgba(26,99,238,0.08) 40%,transparent 70%)}
+  .hero-bg2{position:absolute;bottom:-200px;left:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(192,57,43,0.04) 0%,transparent 60%);pointer-events:none}
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:760px}
+  .hero h1{font-size:clamp(36px,4.7vw,61px)!important;font-weight:600;line-height:1.1;letter-spacing:-2px;margin-bottom:20px;color:#fff;white-space:nowrap}
+  .hero p{font-size:16px;color:#888;font-weight:400;line-height:1.7;max-width:580px;margin:0 auto 36px}
+  .hero-actions{display:flex;gap:16px;justify-content:center;align-items:center}
+  .btn-large{padding:14px 28px;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;transition:.2s}
+  .btn-cta{background:#fff;color:#111;border:1px solid #e0e0e0}
+  .btn-cta:hover{transform:translateY(-1px);box-shadow:0 8px 25px rgba(255,255,255,0.15);background:#f5f5f5}
+  .btn-hero-ghost{background:transparent;border:1px solid #2a2a2a;color:#888;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;transition:.2s}
+  .btn-hero-ghost:hover{border-color:#555;color:#ccc}
+  .hero-logos{margin-top:48px;display:flex;gap:32px;justify-content:center;align-items:center;opacity:.65;flex-wrap:wrap}
+  .hero-logos span{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#888}
+
+  .hero-mockup{position:relative;max-width:960px;margin:56px auto 0;z-index:2}
+  .mockup-frame{background:#0d1117;border:1px solid var(--border-dark);border-radius:12px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(192,57,43,0.08)}
+  .mockup-top{background:#111827;padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border-dark)}
+  .dot{width:10px;height:10px;border-radius:50%}
+  .dot-r{background:#ff5f56}.dot-y{background:#ffbd2e}.dot-g{background:#27c93f}
+  .mockup-body{display:grid;grid-template-columns:56px 1fr 300px;height:380px}
+  .sidebar{background:#0a0e18;border-right:1px solid var(--border-dark);padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:8px}
+  .sidebar-icon{width:22px;height:22px;background:rgba(192,57,43,0.1);border-radius:6px;display:flex;align-items:center;justify-content:center}
+  .sidebar-icon.active{background:rgba(192,57,43,0.25)}
+  .s-dot{width:8px;height:8px;border-radius:2px;background:#64748b}
+  .s-dot.a{background:#c0392b}
+  .main-content{padding:20px;overflow:hidden;background:#0d1117}
+  .invoice-company{font-size:11px;color:#94a3b8}
+  .invoice-company strong{display:block;font-size:14px;color:#fff;margin-bottom:4px}
+  .invoice-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
+  .invoice-title{font-size:13px;font-weight:700;color:#fff;text-align:right}
+  .invoice-num{font-size:11px;color:#64748b}
+  .invoice-divider{height:1px;background:var(--border-dark);margin:12px 0}
+  .invoice-row{display:flex;gap:8px;margin-bottom:4px}
+  .invoice-cell{font-size:10px;color:#64748b;flex:1;padding:4px 6px;background:rgba(255,255,255,0.02);border-radius:4px}
+  .invoice-cell.header{color:#94a3b8;font-weight:600;background:rgba(255,255,255,0.04)}
+  .invoice-total-row{display:flex;justify-content:flex-end;margin-top:12px}
+  .invoice-total{background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.18);border-radius:6px;padding:8px 12px;font-size:11px;color:#94a3b8}
+  .invoice-total span{color:#e74c3c;font-weight:700}
+  .side-panel{background:#0a0e18;border-left:1px solid var(--border-dark);padding:16px;overflow:hidden}
+  .panel-tabs{display:flex;margin-bottom:16px;border-bottom:1px solid var(--border-dark)}
+  .panel-tab{font-size:11px;padding:6px 12px;color:#64748b;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+  .panel-tab.active{color:#e74c3c;border-color:#c0392b}
+  .panel-field{margin-bottom:10px}
+  .panel-label{font-size:10px;color:#64748b;margin-bottom:2px}
+  .panel-value{font-size:11px;color:#94a3b8}
+  .status-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:600}
+  .badge-green{background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,0.2)}
+  .badge-yellow{background:rgba(234,179,8,0.1);color:#eab308;border:1px solid rgba(234,179,8,0.2)}
+  .badge-red{background:rgba(192,57,43,0.1);color:#e74c3c;border:1px solid rgba(192,57,43,0.2)}
+  .badge-float{position:absolute;background:rgba(10,14,24,0.9);backdrop-filter:blur(8px);border:1px solid var(--border-dark);border-radius:12px;padding:8px 12px;font-size:11px;display:flex;align-items:center;gap:8px;z-index:3;box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+  .badge-float.left{left:-40px;top:120px}
+  .badge-float.right{right:-30px;top:80px}
+  .bf-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .bf-green{background:rgba(34,197,94,0.15)}
+  .bf-red{background:rgba(192,57,43,0.15)}
+  .bf-text{font-size:10px;color:#64748b;line-height:1.4}
+  .bf-text strong{display:block;font-size:12px;color:#fff}
+
+  .section{padding:120px 60px;background:var(--bg-light)}
+  .section-label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:16px}
+  .section-title{font-size:clamp(25px,3.6vw,40px);font-weight:600;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;color:var(--text-dark)}
+  .section-subtitle{font-size:14px;color:var(--text-mid);line-height:1.7;max-width:580px;margin-bottom:48px}
+  .features-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+  .feature-list{display:flex;flex-direction:column;gap:36px}
+  .feature-desc{font-size:14px;color:var(--text-mid);line-height:1.7}
+  .feature-cta{margin-top:36px}
+  .btn-outline{background:transparent;border:1px solid #d4cfc9;color:var(--text-mid);padding:12px 24px;border-radius:10px;font-size:14px;cursor:pointer;transition:.2s}
+  .btn-outline:hover{border-color:var(--red);color:var(--red)}
+  .btn-primary-light{background:var(--text-dark);color:#fff;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:500;border:none;cursor:pointer;transition:.2s}
+  .btn-primary-light:hover{background:#333}
+
+  .md-btn{font-size:10px;padding:4px 10px;border-radius:6px;border:1px solid #ddd8d2;color:#888;cursor:pointer;background:transparent}
+  .md-btn.primary{background:rgba(26,99,238,0.08);border-color:rgba(26,99,238,0.2);color:var(--blue)}
+  .md-table{width:100%;border-collapse:collapse}
+  .md-table th{font-size:10px;color:#888;text-align:left;padding:6px 8px;border-bottom:1px solid #e8e4df;font-weight:600}
+  .md-table td{font-size:10px;color:var(--text-mid);padding:6px 8px;border-bottom:1px solid rgba(232,228,223,0.7)}
+  .md-table tr:hover td{background:rgba(192,57,43,0.02)}
+
+  .cards-section{padding:120px 60px;background:var(--bg-light2)}
+  .cards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .card{background:var(--bg-white);border:1px solid var(--border-light);border-radius:16px;overflow:hidden;transition:.3s}
+  .card:hover{border-color:rgba(0,0,0,0.15);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.07)}
+  .card-visual{aspect-ratio:1/1;width:100%;overflow:hidden;position:relative;background:var(--bg-light2)}
+  .card-content{padding:22px}
+  .card-desc{font-size:12px;color:var(--text-mid);line-height:1.6}
+
+  .stats{padding:100px 60px;border-top:1px solid var(--border-light);border-bottom:1px solid var(--border-light);background:var(--bg-light)}
+  .stats-inner{display:grid;grid-template-columns:repeat(3,1fr)}
+  .stat-item{text-align:center;padding:40px 20px;border-right:1px solid var(--border-light)}
+  .stat-item:last-child{border:none}
+  .stat-num{font-size:clamp(36px,5vw,56px);font-weight:600;background:linear-gradient(135deg,#1a1a1a,#9ca3af);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-2px}
+  .stat-label{font-size:14px;color:#888;margin-top:8px}
+
+  .features-2col{display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:48px;border:1px solid var(--border-light);border-radius:12px;overflow:hidden;background:linear-gradient(160deg,#fffefb 0%,rgba(245,241,236,0.4) 100%)}
+  .feat2-item{padding:36px 32px;background:transparent;border-right:1px solid var(--border-light);border-bottom:1px solid var(--border-light);transition:.3s}
+  .feat2-item:nth-child(3n){border-right:none}
+  .feat2-item:nth-child(4),.feat2-item:nth-child(5),.feat2-item:nth-child(6){border-bottom:none}
+  .feat2-item:hover{background:var(--bg-light)}
+  .feat2-icon{margin-bottom:16px;display:flex;align-items:center}
+  .feat2-desc{font-size:13px;color:var(--text-mid);line-height:1.6}
+
+  .feature-highlight{padding:120px 60px;background:var(--bg-light)}
+  .fh-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+  .fh-img{background:linear-gradient(135deg,#ede9e3,#e4dfd8);border:1px solid #d8d2ca;border-radius:12px;height:480px;overflow:hidden;position:relative}
+
+  .testimonials{padding:120px 60px;background:var(--dark)}
+  .t-carousel{position:relative;overflow:hidden;margin-top:48px}
+  .t-track{display:flex;gap:24px;transition:transform .4s ease}
+  .t-card{background:linear-gradient(160deg,#161410 0%,#0e0d0b 100%);border:1px solid var(--border-dark);border-radius:12px;padding:28px;flex:0 0 calc(33.333% - 16px);min-width:0}
+  .t-stars{display:flex;gap:3px;margin-bottom:12px}
+  .t-quote{font-size:13px;color:#888;line-height:1.6;margin-bottom:16px}
+  .t-author-name{font-size:13px;font-weight:600;color:#fff}
+  .t-controls{display:flex;gap:10px;justify-content:center;margin-top:32px}
+  .t-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--border-dark);background:rgba(255,255,255,0.04);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;color:#888}
+  .t-btn:hover{border-color:#555;color:#ccc}
+
+  .support{padding:120px 60px;background:var(--bg-light)}
+  .support-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:48px;gap:16px}
+  .supp-card{padding:36px 32px;background:linear-gradient(160deg,#fffefb 0%,rgba(245,241,236,0.6) 100%);border:1px solid var(--border-light);border-radius:16px;transition:.3s;cursor:pointer}
+  .supp-card:hover{border-color:rgba(239,68,68,0.3);box-shadow:0 16px 40px rgba(239,68,68,0.1)}
+  .supp-icon{margin-bottom:20px;display:flex;align-items:center}
+  .supp-desc{font-size:13px;color:var(--text-mid);line-height:1.6;margin-bottom:16px}
+  .supp-link{font-size:13px;font-weight:600;cursor:pointer}
+
+  .cta-section{padding:120px 60px;text-align:center;position:relative;overflow:hidden;background:var(--dark)}
+  .cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% -5%,rgba(200,40,20,0.2) 0%,rgba(26,99,238,0.08) 40%,transparent 70%)}
+  .cta-inner{position:relative;z-index:2;max-width:700px;margin:0 auto}
+  .cta-title{font-size:clamp(32px,5vw,54px);font-weight:600;letter-spacing:-2px;line-height:1.1;margin-bottom:20px;color:#fff}
+  .cta-sub{font-size:16px;color:#888;margin-bottom:36px}
+  .cta-actions{display:flex;gap:16px;justify-content:center}
+
+  footer{background:#0e0d0b;border-top:1px solid #22201c;padding:60px}
+  .footer-inner{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+  .footer-col h4{font-size:13px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+  .footer-col a{display:block;font-size:13px;color:#444;text-decoration:none;margin-bottom:10px;transition:.2s}
+  .footer-col a:hover{color:#888}
+  .footer-bottom{border-top:1px solid #22201c;padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+  .footer-copy{font-size:12px;color:#444}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo">
+    <img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/69b412a1991ba644da79cabe_Holded%20Logotype.svg" alt="Holded" style="height:15px;width:auto;">
+  </div>
+  <div class="nav-links">
+    <a href="#">Funcionalidades<svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a href="#">Empresas<svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a href="#">Autónomos<svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a href="#">Asesorías<svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a href="#">Recursos<svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a href="#">Precios</a>
+  </div>
+  <div class="nav-btns">
+    <button class="btn-ghost">Iniciar sesión</button>
+    <button class="btn-nav-primary">Prueba gratis</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-bg2"></div>
+  <div style="position:relative;z-index:2;width:100%;max-width:1280px">
+    <div class="hero-content" style="margin:0 auto">
+      <h1>Facturación y mucho más.</h1>
+      <p>Facturación, contabilidad, inventario, RRHH y mucho más. Todo conectado en una sola plataforma inteligente.</p>
+      <div class="hero-actions">
+        <button class="btn-large btn-cta">Empieza gratis</button>
+        <button class="btn-hero-ghost">Empieza gratis con Google</button>
+      </div>
+    </div>
+    <div class="hero-mockup" style="position:relative">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 60%,rgba(200,40,20,0.25) 0%,transparent 70%);z-index:0;filter:blur(40px)"></div>
+      <div style="position:relative;border-radius:12px;overflow:hidden;z-index:1">
+        <img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/69b40a6a80098863a6ed2873_Hero.png" alt="Holded Dashboard" style="width:100%;height:auto;display:block;box-shadow:0 40px 80px rgba(0,0,0,0.6)">
+        <div style="position:absolute;inset:0;background:linear-gradient(to bottom, transparent 50%, rgba(14,13,11,0.85) 100%)"></div>
+      </div>
+    </div>
+    <div class="hero-logos">
+      <span>Proyecto Lobster</span><span>The-Are</span><span>Proyecto Nude</span><span>Ositoandco</span><span>Solestage</span>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES: Facturación -->
+<section class="section" style="background:var(--bg-light2)">
+  <div style="max-width:1280px;margin:0 auto">
+    <div class="features-grid">
+      <div>
+        <h2 class="section-title">Documentos con una imagen profesional</h2>
+        <div class="feature-list">
+          <div>
+            <div class="feature-icon-row"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:18px;height:18px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" /></svg><div class="feature-title" style="margin:0">Documentos con imagen profesional</div></div>
+            <p class="feature-desc">Crea facturas, presupuestos y albaranes con tu imagen corporativa en segundos. Personaliza plantillas y envíalas directamente a tus clientes.</p>
+          </div>
+          <div>
+            <div class="feature-icon-row"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:18px;height:18px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" /></svg><div class="feature-title" style="margin:0">Envío simplificado de tus facturas</div></div>
+            <p class="feature-desc">Envía facturas por email directamente desde Holded y haz seguimiento de su estado en tiempo real.</p>
+          </div>
+        </div>
+        <div class="feature-cta"><button class="btn-primary-light">Aprende más</button></div>
+      </div>
+      <div>
+        <div style="aspect-ratio:1/1;overflow:hidden;border-radius:16px;border:1px solid var(--border-light)">
+          <img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/69b40a6a5ae088b010fb0d27_Feature_1.jpg" alt="Documentos profesionales" style="width:100%;height:100%;object-fit:cover">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES: Contabilidad -->
+<section class="section">
+  <div style="max-width:1280px;margin:0 auto">
+    <div class="features-grid">
+      <div>
+        <div style="aspect-ratio:1/1;overflow:hidden;border-radius:16px;border:1px solid var(--border-light)">
+          <img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/69b40a6a46bd88bc415b6c5f_Feature_2.jpg" alt="Contabilidad en un vistazo" style="width:100%;height:100%;object-fit:cover">
+        </div>
+      </div>
+      <div>
+        <h2 class="section-title">Tu contabilidad en un solo vistazo</h2>
+        <div class="feature-list">
+          <div>
+            <div class="feature-icon-row"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:18px;height:18px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg><div class="feature-title" style="margin:0">Asientos automáticos en el Libro diario</div></div>
+            <p class="feature-desc">Cada venta, compra o pago genera automáticamente su asiento contable. Olvídate de la doble entrada manual.</p>
+          </div>
+          <div>
+            <div class="feature-icon-row"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:18px;height:18px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" /></svg><div class="feature-title" style="margin:0">Trazabilidad en todos los niveles</div></div>
+            <p class="feature-desc">Rastrea cualquier operación desde el documento original hasta su reflejo contable. Auditoría completa con un solo clic.</p>
+          </div>
+        </div>
+        <div class="feature-cta"><button class="btn-primary-light">Explora la funcionalidad</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL SINGLE -->
+<section style="padding:100px 60px;background:var(--dark);position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 0% 50%,rgba(200,40,20,0.1) 0%,rgba(26,99,238,0.06) 50%,transparent 70%)"></div>
+  <div style="max-width:1280px;margin:0 auto;position:relative;z-index:2;display:flex;align-items:center;gap:80px">
+    <div style="width:420px;height:420px;border-radius:16px;flex-shrink:0;overflow:hidden">
+      <img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/6801248c0d4a7803927b0bfc_10ae61741e162587fb9793769a41c4a7_TESTIMONIAL_OSITOs.webp" style="width:100%;height:100%;object-fit:cover">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:28px">
+      <p style="font-size:clamp(24px,2.8vw,38px);font-weight:600;line-height:1.25;letter-spacing:-1.5px;color:#fff">"Toda la empresa habla el mismo idioma gracias a Holded."</p>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <div style="font-size:15px;font-weight:600;color:#fff">Ander Mendez</div>
+        <div style="font-size:13px;color:#888">CEO de Osito & Co.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARDS -->
+<div class="cards-section">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:48px">
+      <h2 class="section-title" style="text-align:center">Todo lo que necesita tu empresa</h2>
+      <p class="section-subtitle" style="text-align:center;margin:0 auto">Un ecosistema completo de herramientas conectadas para gestionar cada área sin fricciones.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-visual"><img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/69b40a6aa887ac07c5dab310_Feature_3.1.jpg" style="width:100%;height:100%;object-fit:cover"></div>
+        <div class="card-content"><div class="card-title">Control de presencia</div><p class="card-desc">Gestiona el control horario, turnos y ausencias de tu equipo de forma automatizada.</p></div>
+      </div>
+      <div class="card">
+        <div class="card-visual"><img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/69b40a6a86ba8f26e9226181_Feature_3.2.jpg" style="width:100%;height:100%;object-fit:cover"></div>
+        <div class="card-content"><div class="card-title">Gestión de inventario</div><p class="card-desc">Controla tu stock en tiempo real, gestiona almacenes y recibe alertas de rotura de stock.</p></div>
+      </div>
+      <div class="card">
+        <div class="card-visual"><img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/69b40a6a24285eddacaaa91a_Feature_3.3.jpg" style="width:100%;height:100%;object-fit:cover"></div>
+        <div class="card-content"><div class="card-title">CRM integrado</div><p class="card-desc">Gestiona tus oportunidades de venta, leads y clientes en un pipeline visual conectado con tu facturación.</p></div>
+      </div>
+      <div class="card">
+        <div class="card-visual"><img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/69b40a6a841b71aafb3e35a2_Feature_3.4.jpg" style="width:100%;height:100%;object-fit:cover"></div>
+        <div class="card-content"><div class="card-title">Gestión de proyectos</div><p class="card-desc">Planifica, asigna y controla el progreso de tus proyectos con horas, gastos y facturación conectados.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div style="max-width:1280px;margin:0 auto">
+    <div class="stats-inner">
+      <div class="stat-item"><div class="stat-num">+100k</div><div class="stat-label">Empresas confían en Holded</div></div>
+      <div class="stat-item"><div class="stat-num">50%</div><div class="stat-label">Menos tiempo en gestión administrativa</div></div>
+      <div class="stat-item"><div class="stat-num">4.8★</div><div class="stat-label">Valoración media en plataformas de reviews</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO -->
+<section style="padding:100px 60px;background:var(--dark);position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 100%,rgba(200,40,20,0.1) 0%,rgba(26,99,238,0.06) 50%,transparent 70%)"></div>
+  <div style="max-width:960px;margin:0 auto;position:relative;z-index:2">
+    <h2 style="font-size:clamp(28px,3.5vw,46px);font-weight:600;letter-spacing:-1.5px;line-height:1.1;color:#fff;text-align:center;margin-bottom:48px">El software de gestión para pymes y emprendedores</h2>
+    <div id="videoThumb" onclick="document.getElementById('videoModal').style.display='flex'" style="position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;cursor:pointer;background:#111;border:1px solid #2a2a2a">
+      <img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/69b41274ad22540a425d9d27_1920x1080_Descubre%20Holded.jpg" style="width:100%;height:100%;object-fit:cover;opacity:0.7">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+        <div style="width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style="width:28px;height:28px;margin-left:3px"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO MODAL -->
+<div id="videoModal" onclick="this.style.display='none'" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;align-items:center;justify-content:center;padding:40px">
+  <div style="width:100%;max-width:960px;aspect-ratio:16/9;position:relative" onclick="event.stopPropagation()">
+    <iframe src="https://fast.wistia.net/embed/iframe/vynfyr1zp7?autoPlay=1" allowfullscreen allow="autoplay" style="width:100%;height:100%;border:none;border-radius:12px"></iframe>
+    <button onclick="document.getElementById('videoModal').style.display='none'" style="position:absolute;top:-40px;right:0;background:transparent;border:none;color:#fff;font-size:24px;cursor:pointer">✕</button>
+  </div>
+</div>
+
+<!-- ALL IN ONE -->
+<section class="section">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px">
+      <div>
+        <h2 class="section-title" style="margin-bottom:12px">Funcionalidades adicionales<br>para crecer sin límites</h2>
+        <p class="section-subtitle" style="margin-bottom:0">Todo lo que necesitas para automatizar y escalar tu negocio.</p>
+      </div>
+      <button class="btn-primary-light" style="white-space:nowrap;flex-shrink:0">Ver todas</button>
+    </div>
+    <div class="features-2col">
+      <div class="feat2-item"><div class="feat2-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:20px;height:20px"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" /></svg></div><div class="feat2-title">Escáner de documentos</div><p class="feat2-desc">Digitaliza facturas y tickets con la cámara de tu móvil. Holded extrae los datos automáticamente.</p></div>
+      <div class="feat2-item"><div class="feat2-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:20px;height:20px"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" /></svg></div><div class="feat2-title">Conciliación bancaria</div><p class="feat2-desc">Conecta tu banco y concilia movimientos automáticamente con tus facturas y asientos contables.</p></div>
+      <div class="feat2-item"><div class="feat2-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:20px;height:20px"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg></div><div class="feat2-title">Presentación de modelos</div><p class="feat2-desc">Genera y presenta los modelos fiscales (303, 347, 390...) directamente desde Holded a la AEAT.</p></div>
+      <div class="feat2-item"><div class="feat2-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:20px;height:20px"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" /></svg></div><div class="feat2-title">Plantillas de documentos</div><p class="feat2-desc">Crea y personaliza plantillas de facturas, albaranes y presupuestos con tu identidad de marca.</p></div>
+      <div class="feat2-item"><div class="feat2-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:20px;height:20px"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" /></svg></div><div class="feat2-title">Remesas</div><p class="feat2-desc">Genera remesas SEPA y gestiona el cobro domiciliado de tus clientes de forma masiva.</p></div>
+      <div class="feat2-item"><div class="feat2-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:20px;height:20px"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3" /></svg></div><div class="feat2-title">Facturas recurrentes</div><p class="feat2-desc">Automatiza la facturación periódica a tus clientes con suscripciones y contratos recurrentes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE HIGHLIGHT: Asesorías -->
+<section class="feature-highlight">
+  <div style="max-width:1280px;margin:0 auto">
+    <div class="fh-inner">
+      <div class="fh-img">
+        <img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/69b40bc3aa7f37af1fcf41fa_OrtoCanis.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px">
+      </div>
+      <div>
+        <h2 class="section-title">La plataforma que conecta asesores y empresas</h2>
+        <p style="font-size:16px;color:var(--text-mid);line-height:1.7;margin-bottom:24px">Gestiona múltiples empresas desde un solo panel. Colabora con tus clientes en tiempo real, comparte documentos y automatiza la contabilidad.</p>
+        <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:36px">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:20px;height:20px;flex-shrink:0;margin-top:2px"><path stroke-linecap="round" stroke-linejoin="round" d="M14.25 7.756a4.5 4.5 0 1 0 0 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+            <div><div style="font-size:18px;font-weight:500;margin-bottom:4px;color:var(--text-dark)">Soporte de múltiples divisas</div><div style="font-size:13px;color:#888">Gestiona clientes internacionales con conversión automática.</div></div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:20px;height:20px;flex-shrink:0;margin-top:2px"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.598 4.5 4.538v11.212c0 .94.807 1.838 1.907 1.962A44.04 44.04 0 0 0 12 18c1.893 0 3.758-.11 5.593-.322c1.1-.124 1.907-1.021 1.907-1.962V4.538c0-.94-.807-1.838-1.907-1.962A44.04 44.04 0 0 0 12 2.25Z" /></svg>
+            <div><div style="font-size:18px;font-weight:500;margin-bottom:4px;color:var(--text-dark)">Cálculo de impuestos automático</div><div style="font-size:13px;color:#888">IVA, IRPF y modelos fiscales calculados sin errores.</div></div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:20px;height:20px;flex-shrink:0;margin-top:2px"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" /></svg>
+            <div><div style="font-size:18px;font-weight:500;margin-bottom:4px;color:var(--text-dark)">Integraciones con terceros</div><div style="font-size:13px;color:#888">Conecta con Shopify, WooCommerce, Stripe y más.</div></div>
+          </div>
+        </div>
+        <button class="btn-primary-light">Descubre el plan Asesorías</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<div class="testimonials" style="position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 0% 50%,rgba(200,40,20,0.1) 0%,rgba(26,99,238,0.06) 50%,transparent 70%);pointer-events:none"></div>
+  <div style="max-width:1280px;margin:0 auto;position:relative;z-index:2">
+    <div style="text-align:center;margin-bottom:48px">
+      <h2 class="section-title" style="text-align:center;color:#fff">Lo que dicen nuestros clientes</h2>
+    </div>
+    <div class="t-carousel">
+      <div class="t-track" id="tTrack">
+        <div class="t-card">
+          <div class="t-stars"><span style="color:#27B481">★★★★★</span></div>
+          <p class="t-quote">"Holded ha transformado completamente cómo gestionamos nuestra empresa. Ahorramos más de 10 horas a la semana en tareas administrativas."</p>
+          <div class="t-author-name">María G.</div>
+          <div class="t-author">CEO · Proyecto Volta S.L.</div>
+        </div>
+        <div class="t-card">
+          <div class="t-stars"><span style="color:#27B481">★★★★★</span></div>
+          <p class="t-quote">"La integración entre facturación y contabilidad es perfecta. Mis asesores están encantados y ya no necesitamos exportar Excel."</p>
+          <div class="t-author-name">Robert G.</div>
+          <div class="t-author">CFO · Tech Solutions</div>
+        </div>
+        <div class="t-card">
+          <div class="t-stars"><span style="color:#27B481">★★★★★</span></div>
+          <p class="t-quote">"Como autónoma, Holded me permite llevar mis cuentas yo misma sin conocimientos contables. Es intuitivo y muy completo."</p>
+          <div class="t-author-name">Ana P.</div>
+          <div class="t-author">Diseñadora freelance</div>
+        </div>
+        <div class="t-card">
+          <div class="t-stars"><span style="color:#27B481">★★★★★</span></div>
+          <p class="t-quote">"Desde que usamos Holded, la comunicación con nuestra asesoría es fluida. Todo en tiempo real, sin emails de ida y vuelta."</p>
+          <div class="t-author-name">Jordi M.</div>
+          <div class="t-author">Fundador · Ositoandco</div>
+        </div>
+      </div>
+    </div>
+    <div class="t-controls">
+      <button class="t-btn" id="tPrev">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:16px;height:16px"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>
+      </button>
+      <button class="t-btn" id="tNext">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:16px;height:16px"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SUPPORT -->
+<section class="support">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:48px">
+      <h2 class="section-title" style="text-align:center">Siempre a tu lado</h2>
+    </div>
+    <div class="support-grid">
+      <div class="supp-card"><div class="supp-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:24px;height:24px"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" /></svg></div><div class="supp-title">Pregunta por chat</div><p class="supp-desc">Resuelve tus dudas al instante con nuestro equipo de soporte disponible en horario de oficina.</p><div class="supp-link" style="color:var(--text-dark)">Abrir chat →</div></div>
+      <div class="supp-card"><div class="supp-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:24px;height:24px"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" /></svg></div><div class="supp-title">Contacta con Ventas</div><p class="supp-desc">Habla con un especialista para encontrar el plan que mejor se adapta a las necesidades de tu empresa.</p><div class="supp-link" style="color:var(--text-dark)">+34 930 34 01 71 →</div></div>
+      <div class="supp-card"><div class="supp-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:24px;height:24px"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 3.741-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" /></svg></div><div class="supp-title">Asiste a los webinars</div><p class="supp-desc">Aprende a sacar el máximo partido a Holded con sesiones formativas en directo con nuestros expertos.</p><div class="supp-link" style="color:var(--text-dark)">Ver próximos webinars →</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-inner">
+    <h2 class="cta-title">Prueba Holded gratis<br>durante 14 días</h2>
+    <p class="cta-sub">Sin tarjeta de crédito. Sin compromiso. Cancela cuando quieras.</p>
+    <div class="cta-actions">
+      <button class="btn-large btn-cta">Empezar ahora gratis</button>
+      <button class="btn-large btn-hero-ghost">Ver precios</button>
+    </div>
+    <p style="font-size:12px;color:#888;margin-top:20px">✓ 14 días gratis · ✓ Sin tarjeta</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="max-width:1280px;margin:0 auto">
+    <div class="footer-inner">
+      <div>
+        <div style="margin-bottom:16px">
+          <img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/69b412a1991ba644da79cabe_Holded%20Logotype.svg" alt="Holded" style="height:15px;width:auto;">
+        </div>
+        <p style="font-size:13px;color:#444;line-height:1.7;max-width:260px">El software de gestión empresarial todo en uno para pymes, autónomos y asesorías.</p>
+      </div>
+      <div class="footer-col"><h4>Producto</h4><a href="#">Facturación</a><a href="#">Contabilidad</a><a href="#">Inventario</a><a href="#">RRHH</a><a href="#">CRM</a><a href="#">Proyectos</a></div>
+      <div class="footer-col"><h4>Empresa</h4><a href="#">Sobre nosotros</a><a href="#">Blog</a><a href="#">Prensa</a><a href="#">Careers</a><a href="#">Partners</a></div>
+      <div class="footer-col"><h4>Soporte</h4><a href="#">Centro de ayuda</a><a href="#">Webinars</a><a href="#">Estado del sistema</a><a href="#">API Docs</a><a href="#">Contacto</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Holded Technologies S.L. Todos los derechos reservados.</span>
+      <div style="display:flex;gap:20px">
+        <a href="#" style="font-size:12px;color:#444;text-decoration:none">Privacidad</a>
+        <a href="#" style="font-size:12px;color:#444;text-decoration:none">Términos</a>
+        <a href="#" style="font-size:12px;color:#444;text-decoration:none">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const track = document.getElementById('tTrack');
+  const cards = track.querySelectorAll('.t-card');
+  let cur = 0;
+  const visible = 3;
+  const max = cards.length - visible;
+  function slide(){
+    const w = cards[0].offsetWidth + 24;
+    track.style.transform = `translateX(-${cur * w}px)`;
+  }
+  document.getElementById('tNext').onclick = () => { if(cur < max) cur++; slide(); };
+  document.getElementById('tPrev').onclick = () => { if(cur > 0) cur--; slide(); };
+  window.addEventListener('resize', slide);
+</script>
+</body>
+</html>
