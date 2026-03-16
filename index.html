@@ -195,10 +195,10 @@
   .int-logo:hover{border-color:rgba(239,68,68,0.3);box-shadow:0 4px 16px rgba(239,68,68,0.08);transform:translateY(-2px)}
 
   /* TESTIMONIALS */
-  .testimonials{padding:80px 24px;background:var(--dark);position:relative;border-radius:24px}
-  .t-carousel{position:relative;overflow:hidden;margin-top:48px}
+  .testimonials{padding:80px 24px;background:var(--dark);position:relative}
+  .t-carousel{position:relative;overflow:hidden;margin-top:48px;padding:4px 2px}
   .t-track{display:flex;gap:24px;transition:transform .4s ease}
-  .t-card{background:linear-gradient(160deg,#161410 0%,#151412 100%);border:1px solid var(--border-dark);border-radius:12px;padding:28px;flex:0 0 calc(33.333% - 16px);min-width:0}
+  .t-card{background:linear-gradient(160deg,#1a1714 0%,#161412 100%);border:1px solid var(--border-dark);border-radius:12px;padding:36px;flex:0 0 calc(33.333% - 16px);min-width:0;box-shadow:0 4px 24px rgba(0,0,0,0.25)}
   .t-stars{display:flex;gap:3px;margin-bottom:12px}
   .t-quote{font-size:14px;color:#888;line-height:1.6;margin-bottom:16px}
   .t-author-name{font-size:13px;font-weight:500;color:#fff}
@@ -556,17 +556,19 @@
 </div>
 
 <!-- TESTIMONIAL SINGLE -->
-<section style="padding:56px 24px;background:var(--dark);position:relative;border-radius:24px">
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 0% 50%,rgba(200,40,20,0.1) 0%,rgba(26,99,238,0.06) 50%,transparent 70%)"></div>
-  <div class="testimonial-single" style="max-width:1280px;margin:0 auto;position:relative;z-index:2;display:flex;align-items:center;gap:48px;flex-wrap:wrap">
-    <div class="testimonial-img" style="width:min(320px,100%);aspect-ratio:1/1;border-radius:16px;flex-shrink:0;overflow:hidden">
-      <img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/6801248c0d4a7803927b0bfc_10ae61741e162587fb9793769a41c4a7_TESTIMONIAL_OSITOs.webp" style="width:100%;height:100%;object-fit:cover">
-    </div>
-    <div class="testimonial-text" style="display:flex;flex-direction:column;gap:20px;flex:1;min-width:280px">
-      <p style="font-size:clamp(22px,2.6vw,38px);font-weight:600;line-height:1.2;letter-spacing:clamp(-0.3px,-0.04em,-1.5px);color:#fff">"Toda la empresa habla el mismo idioma gracias a Holded."</p>
-      <div style="display:flex;flex-direction:column;gap:4px">
-        <div style="font-size:14px;font-weight:500;color:#fff">Ander Mendez</div>
-        <div style="font-size:13px;color:#888">CEO de Osito & Co.</div>
+<section style="padding:56px 24px;background:var(--bg-light2);position:relative">
+  <div style="max-width:1280px;margin:0 auto;position:relative;z-index:2">
+    <div class="testimonial-single" style="display:flex;align-items:center;gap:48px;flex-wrap:wrap;background:var(--dark);border:1px solid var(--border-dark);border-radius:16px;padding:48px;box-shadow:0 4px 32px rgba(0,0,0,0.15);position:relative;overflow:hidden">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 0% 50%,rgba(200,40,20,0.1) 0%,rgba(26,99,238,0.06) 50%,transparent 70%);pointer-events:none"></div>
+      <div class="testimonial-img" style="width:min(280px,100%);aspect-ratio:1/1;border-radius:12px;flex-shrink:0;overflow:hidden;position:relative;z-index:1">
+        <img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/6801248c0d4a7803927b0bfc_10ae61741e162587fb9793769a41c4a7_TESTIMONIAL_OSITOs.webp" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <div class="testimonial-text" style="display:flex;flex-direction:column;gap:20px;flex:1;min-width:280px;position:relative;z-index:1">
+        <p style="font-size:clamp(22px,2.6vw,38px);font-weight:600;line-height:1.2;letter-spacing:clamp(-0.3px,-0.04em,-1.5px);color:#fff">"Toda la empresa habla el mismo idioma gracias a Holded."</p>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div style="font-size:14px;font-weight:500;color:#fff">Ander Mendez</div>
+          <div style="font-size:13px;color:#888">CEO de Osito & Co.</div>
+        </div>
       </div>
     </div>
   </div>
