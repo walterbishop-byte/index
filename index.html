@@ -23,13 +23,13 @@
   body{background:var(--bg-light);color:var(--text-dark);font-family:'Inter',system-ui,-apple-system,sans-serif;overflow-x:hidden;font-size:82%}
   h1,h2,.section-title,.cta-title,.card-title,.feat2-title{font-weight:600!important}
   strong{font-weight:600}
-  .feature-title{font-size:18px;font-weight:500!important;margin-bottom:8px;color:var(--text-dark)}
+  .feature-title{font-size:18px;font-weight:500!important;margin-bottom:0;color:var(--text-dark)}
   .card-title{font-size:18px;font-weight:500!important;margin-bottom:6px;color:var(--text-dark)}
   .feat2-title{font-size:18px;font-weight:500!important;margin-bottom:8px;color:var(--text-dark)}
   .supp-title{font-size:18px;font-weight:500!important;margin-bottom:10px;color:var(--text-dark)}
   .t-author{font-size:12px;font-weight:600;color:#888}
   .footer-col h4{font-size:13px;font-weight:600;color:var(--text-mid);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
-  .feature-icon-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .feature-icon-row{display:flex;align-items:center;gap:12px;margin-bottom:4px}
 
   /* NAV */
   nav{height:60px;background:#151412;backdrop-filter:blur(12px);border-bottom:1px solid var(--border-dark);display:flex;align-items:center;justify-content:space-between;padding:0 96px;position:sticky;top:0;z-index:100;gap:16px}
@@ -371,9 +371,9 @@
   .tab-panel{transition:opacity .4s ease,transform .4s ease}
   .tab-panel.hidden{opacity:0;transform:translateY(10px);pointer-events:none;position:absolute}
   .tab-panel.visible{opacity:1;transform:translateY(0);pointer-events:auto;position:relative}
-  .tab-switcher{display:inline-flex;background:var(--bg-white);border:1px solid var(--border-light);border-radius:100px;padding:6px;gap:4px;box-shadow:0 2px 16px rgba(0,0,0,0.07)}
-  .tab-btn{padding:14px 44px;border-radius:100px;border:none;cursor:pointer;font-size:15px;font-weight:500;letter-spacing:.01em;transition:background .35s ease,color .35s ease,box-shadow .35s ease;background:transparent;color:#aaa}
-  .tab-btn.active{background:var(--bg-light2);color:var(--text-dark);box-shadow:0 4px 20px rgba(239,68,68,0.28),0 2px 8px rgba(0,0,0,0.10);border:1px solid var(--border-light)}
+  .tab-switcher{display:inline-flex;background:var(--bg-white);border:1px solid var(--border-light);border-radius:14px;padding:6px;gap:4px;}
+  .tab-btn{padding:14px 44px;border-radius:10px;border:none;cursor:pointer;font-size:15px;font-weight:500;letter-spacing:.01em;transition:background .35s ease,color .35s ease,box-shadow .35s ease;background:transparent;color:#aaa}
+  .tab-btn.active{background:var(--bg-light2);color:var(--text-dark);border:1px solid var(--border-light)}
   .tab-btn:not(.active):hover{color:var(--text-dark)}
 </style>
 <section class="section" style="background:var(--bg-light2)">
@@ -399,14 +399,14 @@
               <div>
                 <div class="feature-icon-row">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:20px;height:20px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" /></svg>
-                  <div class="feature-title" style="margin:0;font-size:15px">Imagen profesional</div>
+                  <div class="feature-title" style="margin:0">Imagen profesional</div>
                 </div>
                 <p class="feature-desc" style="font-size:14px">Elige entre más de 50 plantillas editables y personaliza las facturas y mensajes que envía tu empresa.</p>
               </div>
               <div>
                 <div class="feature-icon-row">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:20px;height:20px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" /></svg>
-                  <div class="feature-title" style="margin:0;font-size:15px">Crea documentos. Rápido</div>
+                  <div class="feature-title" style="margin:0">Crea documentos. Rápido</div>
                 </div>
                 <p class="feature-desc" style="font-size:14px">Toda la información de contacto, producto, banco e impuestos se añade automáticamente. Solo verifica, guarda y envía.</p>
               </div>
@@ -424,30 +424,30 @@
       <!-- Panel: Contabilidad -->
       <div id="panel-contabilidad" class="tab-panel hidden">
         <div class="features-grid">
-          <div style="display:flex;align-items:center;justify-content:center">
-            <div style="aspect-ratio:1/1;overflow:hidden;border-radius:16px;border:1px solid var(--border-light);width:82%">
-              <img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/69b40a6a46bd88bc415b6c5f_Feature_2.jpg" alt="Contabilidad en un vistazo" style="width:100%;height:100%;object-fit:cover">
-            </div>
-          </div>
           <div style="max-width:460px">
             <h2 class="section-title" style="margin-bottom:40px">Un compañero en tu viaje contable</h2>
             <div class="feature-list">
               <div>
                 <div class="feature-icon-row">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:20px;height:20px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                  <div class="feature-title" style="margin:0;font-size:15px">Tu libro mayor, siempre al día</div>
+                  <div class="feature-title" style="margin:0">Tu libro mayor, siempre al día</div>
                 </div>
                 <p class="feature-desc" style="font-size:14px">El proceso es automático, pero siempre tienes la última palabra — para que puedas controlar lo que has revisado y lo que no.</p>
               </div>
               <div>
                 <div class="feature-icon-row">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EF4444" style="width:20px;height:20px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" /></svg>
-                  <div class="feature-title" style="margin:0;font-size:15px">Informes en tiempo real</div>
+                  <div class="feature-title" style="margin:0">Informes en tiempo real</div>
                 </div>
                 <p class="feature-desc" style="font-size:14px">Desde el momento en que empiezas a usar Holded, recopila tus datos y crea informes automáticamente en tiempo real.</p>
               </div>
             </div>
             <div class="feature-cta"><button class="btn-primary-light">Saber más</button></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center">
+            <div style="aspect-ratio:1/1;overflow:hidden;border-radius:16px;border:1px solid var(--border-light);width:82%">
+              <img src="https://cdn.prod.website-files.com/67b490fcbe3ce7d2c397872f/69b40a6a46bd88bc415b6c5f_Feature_2.jpg" alt="Contabilidad en un vistazo" style="width:100%;height:100%;object-fit:cover">
+            </div>
           </div>
         </div>
       </div>
